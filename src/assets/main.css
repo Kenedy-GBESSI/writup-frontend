@@ -1,0 +1,21 @@
+@import "./base.css";
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+a{
+  text-decoration: none;
+  display: inline-block;
+  background-color: var(----vt-c-blue);
+  color: var(--vt-c-black);
+  transition: 0.4s;
+  text-align: center;
+}
+
