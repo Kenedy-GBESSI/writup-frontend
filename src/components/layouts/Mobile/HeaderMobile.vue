@@ -6,8 +6,8 @@
      </div>
      <div class="mobile-menu" v-show="isActive">
        <ul>
-          <li class="menu-item start">
-             <router-link to="#"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></router-link>
+        <li class="menu-item start">
+             <a @click="props.toggleModal()"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></a>
           </li>
           <li class="menu-item">
             <router-link to="/">Accueil</router-link>
@@ -21,6 +21,7 @@
           <li class="menu-item end">
             <router-link to="/connexion">Connexion</router-link>
           </li>
+          
       </ul>
      </div>
      
@@ -31,7 +32,13 @@
 import { reactive, ref, toRefs } from 'vue'
 
 export default {
-  setup () {
+
+  props: {
+    toggleModal: {
+      Type : Function
+    }
+  },
+  setup (props) {
     let isActive = ref(false);
     const toactive = () =>{
        isActive.value = !isActive.value;
@@ -39,7 +46,8 @@ export default {
   
     return {
       toactive,
-      isActive
+      isActive,
+      props
     }
   }
 }

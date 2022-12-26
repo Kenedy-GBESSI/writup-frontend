@@ -1,54 +1,58 @@
 <template>
-  <div class="overwiewbook zoom-in">
-      <div class="wrapper" :style="online()">
+  <div class="overwiewbook" :id="num">
+      <div class="wrapper" :style="online(data.img)">
         <div class="part">
           <h3>{{data.title}}</h3>
           <div class="for-image"><img :src='data.img' alt="research"></div>
           <p>{{data.summary}}</p>
-          <button>Voir plus</button>
+          <router-link :to="{name:'savememorybook',params:{id: data.id, isdownload: data.isDownload}}">Voir plus</router-link>
         </div>
       </div>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
-
+import { reactive,computed } from 'vue';
+import tools from '../../mixins/index.js';
 export default {
-  props: {
-    title:{
-       require: true,
-       type: String
-    },
-    summary: {
-      require: true,
-      type: String,
-    },
-    img: {
-      require: true,
-      type: String
-    }
-  },
-  setup (props) {
-
+    props: {
+        title: {
+            require: true,
+            type: String
+        },
+        summary: {
+            require: true,
+            type: String,
+        },
+        img: {
+            require: true,
+            type: String
+        },
+        id: {
+          require: true,
+        },
+        isDownload: {
+          require: true,
+          type: Boolean
+        },
+        
       
-      const data = reactive({
-        title: props.title,
-        summary: props.summary,
-        img: 'http://127.0.0.1:8000/storage/images/'+props.img
-      });
-      const online = ()=>{
+    },
+    setup(props) {
+        const data = reactive({
+            title: props.title,
+            summary: props.summary,
+            img: "http://127.0.0.1:8000/storage/images/" + props.img,
+            id: props.id,
+            isDownload: props.isDownload
+        });
+        const {online} = tools()    
         return {
-          backgroundImage: `url(${data.img})`
-        }
-      } 
-  
-    return {
-       data,
-       online
-    }
-
-  }
+            data,
+            online,
+            num: computed(()=>{return 'book'+data.id.toString()})
+        };
+    },
 }
 </script>
 
@@ -62,7 +66,7 @@ export default {
   width: 80vmax;
   margin: 0  0 20px 0;
   background-blend-mode: multiply; 
-  background-size:32%;
+  background-size:42%;
   background-repeat:no-repeat;
   background-position:right;
   font-size: 12px;
@@ -100,7 +104,7 @@ p{
   font-size: 15px;
   letter-spacing: 0.5px;
 }
-button{
+button,a{
   display:block;
   margin: 0 0 0 2rem;
   width: 190px;
@@ -109,15 +113,20 @@ button{
   cursor: pointer;
   color: #fff;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 3px;
   background: #004AA7;
 }
 @media screen and (max-width: 1020px){
   .wrapper{
     height: auto;
-    background: none;
+    background: none !important;;
     width: 100%;
-    background-color:#E5E5E5;
+  }
+  .overwiewbook{
+    background: none;
   }
   .part{
     width: 100%;
@@ -136,7 +145,7 @@ button{
     padding-top: 1%;
     display: block;
   }
-  button{
+  button,a{
     margin: 5px auto;
     width: 95%;
     text-align: center;

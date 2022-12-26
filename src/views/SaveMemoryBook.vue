@@ -1,22 +1,41 @@
 <template>
   <div class="savememorybook">
-     <save-view-book/>
+    {{sessionStorage.setItem('first_id',book.chapters[0].id)}}
+     <save-view-book :id="id" :isdownload="isDownload"></save-view-book>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import SaveViewBook from '../components/Pages/SaveViewBook.vue'
+import useBook from '../services/BookService.js' 
+
 
 export default {
   components: { SaveViewBook },
-  setup () {
-    const state = reactive({
-      count: 0,
+  props:{
+    id:{
+      require: true,
+    },
+    isdownload: {
+      require: true
+    }
+  },
+  setup (props) {
+    const {getBook,book} = useBook()
+    let id = ref(props.id);
+    let isDownload = ref(props.isdownload);
+    onMounted(async ()=>{
+      await getBook(id.value)
     })
-  
+    
+    const dynamic = computed(()=>{book.value.chapters[0].id})
     return {
-      ...toRefs(state),
+       id,
+       isDownload,
+       book,
+       dynamic,
+       sessionStorage
     }
   }
 }
@@ -24,14 +43,13 @@ export default {
 
 <style  scoped>
 .savememorybook{
-  top: 100px !important;
-  margin-bottom: 100px!important;
+  top: 120px !important;
+  margin-bottom: 150px!important;
   position: relative;
 }
 @media screen and (max-width: 1020px){
   .savememorybook{
     top: 80px !important;
-    margin-bottom: 100px;
     width: 100%;
    }
 }

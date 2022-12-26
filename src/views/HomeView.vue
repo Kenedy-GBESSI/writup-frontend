@@ -1,7 +1,8 @@
 <script>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import useBook from '../services/BookService.js'
 import OverViewBook from '../components/Pages/OverViewBook.vue';
+import store from '../store';
  export default {
   components: { OverViewBook },
     setup(){
@@ -9,11 +10,14 @@ import OverViewBook from '../components/Pages/OverViewBook.vue';
        onMounted( () => {
         getBooks();
       });
+      let num  = ref(0)
 
 
       return {
           getBooks,
           books,
+          num,
+          store
       }
     }
  }
@@ -22,19 +26,18 @@ import OverViewBook from '../components/Pages/OverViewBook.vue';
 
 <template>
   <main>
-  <over-view-book v-for="book in books" :key="book.id" :title="book.title" :img="book.picture_url" :summary="book.summary"></over-view-book>
+  <over-view-book v-for="book in books" :key="book.id" :title="book.title" :img="book.picture_url" :summary="book.summary" :id="book.id" :isDownload="true"></over-view-book>
   </main>
 </template>
 <style scoped>
 main{
-  top: 100px !important;
+  top: 140px !important;
   position: relative;
-  margin-bottom:100px ;
+  margin-bottom:160px ;
 }
 @media screen and (max-width: 1020px){
    main{
-    top: 80px !important;
-    margin-bottom: 100px;
+    top: 100px !important;
    }
 }
 </style>

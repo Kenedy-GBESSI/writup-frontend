@@ -1,7 +1,8 @@
 import { createStore } from 'vuex';
-import tools from '../mixins/index.js'
+import tools from '../mixins/index.js';
+import axiosClient from '../axios/index.js'
 const {toConcatenate} = tools();
-import { reactive } from 'vue';
+import { reactive , ref} from 'vue';
 
 export default createStore({
   state: {
@@ -15,7 +16,9 @@ export default createStore({
         'email': '',
         'error': ''
        })
-    }
+    },
+    first_id: sessionStorage.getItem('first_id')??1,
+    loading: true
   },
   getters: {
   },
@@ -25,7 +28,6 @@ export default createStore({
         state.user.data = {}
     },
     setUser: (state,userData) =>{
-       console.log(userData)
       if(userData.hasOwnProperty('message') && !userData.hasOwnProperty('exception')){
         const data_errors = userData.errors;
         for (const key in data_errors) {
@@ -58,9 +60,12 @@ export default createStore({
          method: "POST",
          body: JSON.stringify(user)
        })
-       .then((res) => res.json())
+       .then(
+        (res) => res.json()
+        )
        .then((res) => {
          commit('setUser',res);
+         this.state.loading = false
          return res
        })
     },
@@ -76,10 +81,18 @@ export default createStore({
         .then((res) => res.json())
         .then((res)=> {
            commit('setUser',res)
+           this.state.loading = false
            return res
         })
 
-    } 
+    },
+    async getUser(){
+      return await axiosClient.get('/user');
+    },
+    download(download_info){
+        return download_info
+       /* return axiosClient.post('/download',data)*/
+    }
   },
   modules: {
   }

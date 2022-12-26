@@ -12,7 +12,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {isGuest: true}
     },
     {
       path: '/about',
@@ -41,8 +42,9 @@ const router = createRouter({
       meta: {requireAuth: true}
     },
     {
-      path: '/savememorybook',
+      path: '/savememorybook/:id/:isdownload',
       name: 'savememorybook',
+      props: true,
       component : SaveMemoryBook,
       meta: {requireAuth: true}
     }

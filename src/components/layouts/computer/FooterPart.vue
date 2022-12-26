@@ -4,9 +4,9 @@
    <p><router-link to="">Politique de confidentialité</router-link></p>
     <div class="links">
     <p>Suivez nous sur</p>
-    <p class="link"><router-link to="/"><img src="@/assets/images/a80f6d910e41e9de77f6b1248c12c2c8.png" alt="" width="24" height="24"></router-link></p>
-    <p class="link"><router-link to=""><img src="@/assets/images/607fe4a6b7204f096af61750cc4926bc.png" alt="" width="27" height="27"></router-link></p>
-    <p class="link"><router-link to=""><img src="@/assets/images/b442f32356f3fb0d01088dd191671af9.png" alt="" width="21" height="21"></router-link></p></div>
+    <p class="link"><a :href="links[0]" target="_blank"><img src="@/assets/images/a80f6d910e41e9de77f6b1248c12c2c8.png" alt="" width="24" height="24"></a></p>
+    <p class="link"><a :href="links[1]" target="_blank"><img src="@/assets/images/607fe4a6b7204f096af61750cc4926bc.png" alt="" width="27" height="27"></a></p>
+    <p class="link"><a :href="links[2]" target="_blank"><img src="@/assets/images/b442f32356f3fb0d01088dd191671af9.png" alt="" width="21" height="21"></a></p></div>
   </div>
 </template>
 
@@ -16,8 +16,11 @@ export default {
   setup () {
      const {theDate} = tools();
      const value = theDate();
+
+     const links = ['https://www.facebook.com/kenedy.gbessi','https://www.linkedin.com/in/kénédy-gbessi-564842213','https://www.instagram.com/']
     return {
-      value
+      value,
+      links
     }
   }
 }

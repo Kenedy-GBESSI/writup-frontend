@@ -6,10 +6,10 @@
      <div class="all-menu">
        <ul class="list-menu">
           <li class="menu-item">
-            <router-link to="dashboard">Accueil</router-link>
+            <router-link to="/dashboard">Accueil</router-link>
           </li>
           <li class="menu-item">
-            <router-link to="/savememorybook">Mes sauvegardes</router-link>
+            <router-link :to="num">Mes sauvegardes</router-link>
           </li>
           <li class="menu-item">
             <router-link to="/about">A propos</router-link>
@@ -17,8 +17,8 @@
           <li class="menu-item">
             <a @click="logout">Déconnexion</a>
           </li>
-          <li class="menu-item">
-             <input type="text" id="reseach" placeholder="Rechercher">
+          <li class="menu-item start">
+             <a @click="props.toggleModal()"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></a>
           </li>
        </ul>
      </div>
@@ -28,9 +28,14 @@
 <script>
 import router from '../../../router';
 import store from '../../../store';
-
+import {ref, onMounted, computed} from 'vue';
 export default {
-  setup () {
+  props: {
+    toggleModal: {
+      Type : Function
+    }
+  },
+  setup (props) {
      
     function logout(){
         store.commit('logout');
@@ -38,9 +43,33 @@ export default {
           name: 'home'
         })
     }
-  
+
+    let user = ref([]);
+    let ids_liste = ref([]);
+       onMounted( () => {
+        store
+        .dispatch('getUser')
+        .then((res)=>{
+          user.value = res.data.data;
+          for(var i in user.value.books){
+            ids_liste.value.push(user.value.books[i]['id'])
+          }
+        })
+      });
+    
+      
+      
     return {
-      logout
+      logout,
+      num: computed(()=> {
+        if(ids_liste.value.indexOf(1)==-1){
+          return '/savememorybook/1/false'
+        }
+        return '/savememorybook/1/true'
+      }),
+      props
+     
+      
     }
   }
 }

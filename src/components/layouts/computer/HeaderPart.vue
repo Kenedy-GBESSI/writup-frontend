@@ -17,8 +17,8 @@
           <li class="menu-item">
             <router-link to="/connexion">Connexion</router-link>
           </li>
-          <li class="menu-item">
-             <input type="text" id="reseach" placeholder="Seaching ...">
+          <li class="menu-item start">
+             <a @click="props.toggleModal()"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></a>
           </li>
        </ul>
      </div>
@@ -29,10 +29,16 @@
 import {ref } from 'vue'
 
 export default {
-  setup () {
+  props: {
+    toggleModal: {
+      Type : Function
+    }
+  },
+  setup (props) {
     let isSeach = ref(false);
     return {
-      isSeach
+      isSeach,
+      props
     }
   }
 }

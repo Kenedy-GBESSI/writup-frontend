@@ -6,17 +6,17 @@
      </div>
      <div class="mobile-menu" v-show="isActive">
        <ul>
-          <li class="menu-item start">
-             <router-link to="#"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></router-link>
+        <li class="menu-item start">
+             <a @click="props.toggleModal()"><img src="@/assets/images/bedc6d99e3f99ce6288d09f94bcfbcbe.png" alt="research"></a>
           </li>
           <li class="menu-item">
-            <router-link to="dashboard">Accueil</router-link>
+            <router-link to="/dashboard">Accueil</router-link>
           </li>
           <li class="menu-item">
-            <router-link to="savememorybook">Mes sauvegardes</router-link>
+            <router-link to="/savememorybook/1/0">Mes sauvegardes</router-link>
           </li>
           <li class="menu-item">
-            <router-link to="about">A propos</router-link>
+            <router-link to="/about">A propos</router-link>
           </li>
       </ul>
      </div>
@@ -24,20 +24,26 @@
 </template>
 
 <script>
-import { reactive, ref, toRefs } from 'vue'
+import { ref} from 'vue';
 
 export default {
-  setup () {
-    let isActive = ref(false);
-    const toactive = () =>{
-       isActive.value = !isActive.value;
+  props: {
+    toggleModal: {
+      Type : Function
     }
-  
-    return {
-      toactive,
-      isActive
-    }
-  }
+  },
+    setup(props) {
+        let isActive = ref(false);
+        const toactive = () => {
+            isActive.value = !isActive.value;
+        };
+        
+        return {
+            toactive,
+            isActive,
+            props
+        };
+    },
 }
 </script>
 

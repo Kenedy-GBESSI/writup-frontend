@@ -75,7 +75,7 @@ export default {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
-  height: 530px;
+  height: 78.5vh;
   width: 80vmax;
   background-color:#E5E5E5;
   margin: 100px auto 12px  auto;

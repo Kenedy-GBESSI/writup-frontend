@@ -1,3 +1,4 @@
+
 export default function sometools(){
    
    const toConcatenate = (data) =>{
@@ -22,11 +23,18 @@ export default function sometools(){
    const setLocal = (key,data) =>  {
       localStorage.setItem(key,data);
    }
+   const online = (data) => {
+      return {backgroundImage: `url(${data})`}
+   }
+
+   
+   
    return {
      toConcatenate,
      theDate,
      getLocal,
-     setLocal
+     setLocal,
+     online
    }
 
 
